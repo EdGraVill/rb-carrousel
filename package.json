@@ -1,0 +1,57 @@
+{
+  "name": "rb-carrousel",
+  "version": "0.1.0",
+  "description": "react-basics carrousel component",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack -p"
+  },
+  "keywords": [
+    "react",
+    "basics",
+    "react-basics",
+    "carrousel",
+    "thumbnail",
+    "image"
+  ],
+  "author": "Eduardo Grajales Villanueva @EdGraVill",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "flow-bin": "^0.68.0",
+    "jest": "^22.4.3",
+    "path": "^0.12.7",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.3.0",
+    "webpack-cli": "^2.0.13"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "react": "^16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdGraVill/rb-carrousel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EdGraVill/rb-carrousel/issues"
+  },
+  "homepage": "https://github.com/EdGraVill/rb-carrousel#readme"
+}
