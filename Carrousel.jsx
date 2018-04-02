@@ -56,7 +56,7 @@ class Carrousel extends Component<PropsType> {
   }
 
   hammerHandler: ?Hammer;
-  carrouselImages: ?HTMLDivElement = React.createRef();
+  carrouselImages: ?HTMLDivElement;
 
   render() {
     const {
@@ -85,7 +85,7 @@ class Carrousel extends Component<PropsType> {
       >
         <div
           className="rbcarrousel__images"
-          ref={this.carrouselImages}
+          ref={(ref) => { this.carrouselImages = ref; }}
           style={{
             width: `${data.length}00%`,
             left: position && position >= 0 ?

@@ -89,7 +89,7 @@ class Thumbnails extends Component<PropsType> {
   startLeft: ?number;
   startPosition: ?number;
   hammerHandler: ?Hammer;
-  thumbnailsContainer: ?HTMLDivElement = React.createRef();;
+  thumbnailsContainer: ?HTMLDivElement;
   thumbnails: Array<HTMLDivElement> = [];
 
   render() {
@@ -102,7 +102,7 @@ class Thumbnails extends Component<PropsType> {
     return (
       <div
         className="rbcarrousel__thumbnails"
-        ref={this.thumbnailsContainer}
+        ref={(ref) => { this.thumbnailsContainer = ref; }}
       >
         {data.map((element, index) => {
           const pos = (position || 0) >= 0 ?
