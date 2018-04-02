@@ -16,34 +16,36 @@ type PropsType = {
 
 class Thumbnails extends Component<PropsType> {
   componentDidMount() {
-    this.hammerHandler = new Hammer(this.thumbnailsContainer);
+    if (this.thumbnailsContainer) this.hammerHandler = new Hammer(this.thumbnailsContainer);
 
-    this.hammerHandler.on('panleft panright panend', (event) => {
-      if (event.type === 'panend') {
-        this.startLeft = Number(this.thumbnails[0].style.left.replace('px', ''));
-        this.startPosition = undefined;
-        this.thumbnails.forEach((element) => {
-          const thumbnail = element;
+    if (this.hammerHandler) {
+      this.hammerHandler.on('panleft panright panend', (event) => {
+        if (event.type === 'panend') {
+          this.startLeft = Number(this.thumbnails[0].style.left.replace('px', ''));
+          this.startPosition = undefined;
+          this.thumbnails.forEach((element) => {
+            const thumbnail = element;
 
-          thumbnail.style.transition = 'all 0.3s cubic-bezier(.25, .8, .25, 1)';
-          thumbnail.style.pointerEvents = 'auto';
-        });
-      } else if (this.startPosition === undefined) {
-        this.startPosition = event.center.x;
-        this.thumbnails.forEach((element) => {
-          const thumbnail = element;
+            thumbnail.style.transition = 'all 0.3s cubic-bezier(.25, .8, .25, 1)';
+            thumbnail.style.pointerEvents = 'auto';
+          });
+        } else if (this.startPosition === undefined) {
+          this.startPosition = event.center.x;
+          this.thumbnails.forEach((element) => {
+            const thumbnail = element;
 
-          thumbnail.style.transition = 'initial';
-          thumbnail.style.pointerEvents = 'none';
-        });
-      } else {
-        this.thumbnails.forEach((element) => {
-          const thumbnail = element;
+            thumbnail.style.transition = 'initial';
+            thumbnail.style.pointerEvents = 'none';
+          });
+        } else {
+          this.thumbnails.forEach((element) => {
+            const thumbnail = element;
 
-          thumbnail.style.left = `${this.startLeft + (event.center.x - (this.startPosition || 0))}px`;
-        });
-      }
-    });
+            thumbnail.style.left = `${this.startLeft + (event.center.x - (this.startPosition || 0))}px`;
+          });
+        }
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -67,25 +69,27 @@ class Thumbnails extends Component<PropsType> {
   }
 
   fixLeft(): void {
-    const { data, position } = this.props;
-    const width: number = this.thumbnailsContainer.offsetWidth;
-    const pos: number = (position || 0) >= 0 ?
-      (position || 0) % data.length :
-      (data.length - 1) - ((Math.abs(position || 0) - 1) % data.length);
+    if (this.thumbnailsContainer) {
+      const { data, position } = this.props;
+      const width: number = this.thumbnailsContainer.offsetWidth;
+      const pos: number = (position || 0) >= 0 ?
+        (position || 0) % data.length :
+        (data.length - 1) - ((Math.abs(position || 0) - 1) % data.length);
 
-    this.thumbnails.forEach((element) => {
-      const thumbnail = element;
+      this.thumbnails.forEach((element) => {
+        const thumbnail = element;
 
-      thumbnail.style.left = `${(((width / 2) - this.totalWidth(pos)) - (pos * 16)) + (this.thumbnails[pos].offsetWidth / 6)}px`;
-    });
+        thumbnail.style.left = `${(((width / 2) - this.totalWidth(pos)) - (pos * 16)) + (this.thumbnails[pos].offsetWidth / 6)}px`;
+      });
 
-    this.startLeft = Number(this.thumbnails[0].style.left.replace('px', '')) || 0;
+      this.startLeft = Number(this.thumbnails[0].style.left.replace('px', '')) || 0;
+    }
   }
 
   startLeft: ?number;
   startPosition: ?number;
-  hammerHandler: Hammer;
-  thumbnailsContainer: HTMLDivElement;
+  hammerHandler: ?Hammer;
+  thumbnailsContainer: ?HTMLDivElement = React.createRef();;
   thumbnails: Array<HTMLDivElement> = [];
 
   render() {
@@ -98,9 +102,7 @@ class Thumbnails extends Component<PropsType> {
     return (
       <div
         className="rbcarrousel__thumbnails"
-        ref={(ref) => {
-          this.thumbnailsContainer = ref || document.createElement('div');
-        }}
+        ref={this.thumbnailsContainer}
       >
         {data.map((element, index) => {
           const pos = (position || 0) >= 0 ?

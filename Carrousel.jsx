@@ -33,10 +33,12 @@ class Carrousel extends Component<PropsType> {
     this.hammerHandler = new Hammer(this.carrouselImages);
     this.hammerHandler.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 
-    this.hammerHandler.on('swipe', (event) => {
-      if (event.direction === 2 && onSwipe) onSwipe(this.getNextPosition.bind(this)(true));
-      else if (event.direction === 4 && onSwipe) onSwipe(this.getNextPosition.bind(this)(false));
-    });
+    if (this.hammerHandler) {
+      this.hammerHandler.on('swipe', (event) => {
+        if (event.direction === 2 && onSwipe) onSwipe(this.getNextPosition.bind(this)(true));
+        else if (event.direction === 4 && onSwipe) onSwipe(this.getNextPosition.bind(this)(false));
+      });
+    }
   }
 
   getNextPosition(forward: boolean = true): number {
@@ -53,8 +55,8 @@ class Carrousel extends Component<PropsType> {
     return data.length === pos + 1 ? 0 : pos + 1;
   }
 
-  hammerHandler: Hammer;
-  carrouselImages: HTMLDivElement;
+  hammerHandler: ?Hammer;
+  carrouselImages: ?HTMLDivElement = React.createRef();
 
   render() {
     const {
@@ -83,7 +85,7 @@ class Carrousel extends Component<PropsType> {
       >
         <div
           className="rbcarrousel__images"
-          ref={(ref) => { this.carrouselImages = ref || document.createElement('div'); }}
+          ref={this.carrouselImages}
           style={{
             width: `${data.length}00%`,
             left: position && position >= 0 ?
