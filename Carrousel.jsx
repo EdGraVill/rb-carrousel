@@ -7,7 +7,7 @@ import './carrousel.css';
 import Indicator from './Indicator';
 
 type PropsType = {
-  children: React$Element<'div'>,
+  children?: React$Element<'div'>,
   data: Array<{
     alt: string,
     src: string,
@@ -22,6 +22,7 @@ type PropsType = {
 
 class Carrousel extends Component<PropsType> {
   static defaultProps = {
+    children: null,
     indicator: false,
     position: 0,
     style: {},
